@@ -1,11 +1,12 @@
-import { combineReducers, createStore } from "redux";
-import { allWordsReducer } from "../Slices/allWords/allWordsSlice";
+import {configureStore, combineReducers} from '@reduxjs/toolkit';
+import {allWordsReducer} from '../Slices/allWords/allWordsSlice';
 
-const reducer =combineReducers({
-    allWordsReducer:allWordsReducer
-})
+const reducer = combineReducers({
+  allWords: allWordsReducer,
+});
 
-export const Store = createStore(
-    reducer,
-);
+export type RootState = ReturnType<typeof reducer>;
 
+export const Store = configureStore({
+  reducer: reducer,
+});

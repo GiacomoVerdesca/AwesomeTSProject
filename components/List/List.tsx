@@ -1,25 +1,33 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { allWordsSelector } from '../../Redux/Selectors/Selectors';
+import { removeItemAllWords } from '../../Redux/Slices/allWords/allWordsSlice'
+import { FlatList, View, Text } from 'react-native';
+import { Style } from './Style';
 
-import {FlatList, View, Text,ScrollView, Button} from 'react-native';
-import {Style} from './Style';
+export const List = () => {
 
-export const List = (props:any) => {
+  const dispatch = useDispatch();
 
-    
+  const allWords: any = useSelector(allWordsSelector);
+
+
+  const delet = (id: string) => {
+    dispatch(removeItemAllWords(id));
+  };
+
+
   return (
-   <View style={Style.container}>
+    <View style={Style.container}>
       <FlatList
-
-        data={props.allParole}
-        renderItem={({item}) => (
+        data={allWords}
+        renderItem={({ item }) => (
           <View style={Style.ViewText}>
             <Text style={Style.single}> {item.parola}</Text>
-            <Text  style={Style.button} onPress={()=>props.delet(item.id)}>x</Text>
-             
-            
+            <Text style={Style.button} onPress={() => delet(item.id)}>x</Text>
           </View>
         )}
-       
+
       />
     </View>
   );
