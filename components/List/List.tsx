@@ -12,7 +12,7 @@ export const List = () => {
   const allWords: any = useSelector(allWordsSelector);
 
 
-  const delet = (id: string) => {
+  const delet = (id: number) => {
     dispatch(removeItemAllWords(id));
   };
 
@@ -20,6 +20,7 @@ export const List = () => {
   return (
     <View style={Style.container}>
       <FlatList
+        keyExtractor={(item) => item.id.toString()}
         data={allWords}
         renderItem={({ item }) => (
           <View style={Style.ViewText}>
