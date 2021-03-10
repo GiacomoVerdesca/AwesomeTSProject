@@ -1,8 +1,11 @@
 import {StyleSheet} from 'react-native';
 
 export const Style = StyleSheet.create({
-  flatList: {
-    marginTop: 40,
+  container:{
+    flex:1,
+    marginTop:40,
+    marginBottom:30
+
   },
   ViewText: {
     flexDirection: 'row',

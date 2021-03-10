@@ -1,0 +1,1 @@
+export const allWordsReducer = (state:any)=>{state.allWords}

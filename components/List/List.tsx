@@ -7,7 +7,7 @@ export const List = (props:any) => {
 
     
   return (
-   <View>
+   <View style={Style.container}>
       <FlatList
 
         data={props.allParole}
@@ -19,7 +19,7 @@ export const List = (props:any) => {
             
           </View>
         )}
-        style={Style.flatList}
+       
       />
     </View>
   );
