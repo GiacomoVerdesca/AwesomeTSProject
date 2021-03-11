@@ -8,5 +8,5 @@ const reducer = combineReducers({
 export type RootState = ReturnType<typeof reducer>;
 
 export const Store = configureStore({
-  reducer: reducer,
+  reducer,
 });
