@@ -5,7 +5,8 @@ import { Style } from './Style';
 import { setKeys } from '../../Redux/Slices/keys';
 import { keysSelector } from '../../Redux/Selectors/Selectors';
 import { setItemStorage } from '../../core/AsyncStorage';
-
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 export const Form = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ export const Form = () => {
         onChangeText={(value) => setParole(value)}
       />
       <View style={Style.Viewbutton}>
+      
         <Button title="Add" color="orange" disabled={!parole} onPress={() => handleSubmit()} />
       </View>
     </View>

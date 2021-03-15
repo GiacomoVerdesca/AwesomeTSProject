@@ -5,6 +5,9 @@ import { Style } from './Style';
 import AsyncStorage from '@react-native-community/async-storage';
 import { arrayListSelector, keysSelector } from '../../Redux/Selectors/Selectors';
 import { setArrayList } from '../../Redux/Slices/arrayList';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faSquare } from '@fortawesome/free-regular-svg-icons';
+
 
 export const List = () => {
 
@@ -30,7 +33,7 @@ export const List = () => {
         data={arrayList}
         renderItem={({ item }) => (
           <View style={Style.ViewText}>
-            <Text style={Style.single}> {item[1]}</Text>
+            <Text style={Style.single}> <FontAwesomeIcon icon={ faSquare } /> {item[1]}</Text>
             <Text style={Style.button} onPress={() => removeItem(item[0])}>x</Text>
           </View>
         )}
