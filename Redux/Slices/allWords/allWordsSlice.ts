@@ -1,39 +1,58 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import {createSlice} from '@reduxjs/toolkit';
-import {Alert} from 'react-native';
 
 interface items {
   id: number;
   parola: string;
 }
 
-var array: items[] = [];
+var array: any = [];
+
+const aspetta = async (state: any) => {
+   await getter(state);
+};
+
+const getter = async (state: any) => {
+  try {
+    const value: any = await AsyncStorage.getItem('AllWords');
+    if (value !== null) {
+      console.log('sto nel getter per prendere lo storage', value);
+      state.allWords = value.data;
+      return state;
+    }
+  } catch (error) {
+    console.warn(error);
+  }
+};
+
+const setter = async (action: any) => {
+  try {
+    array.push(action.payload);
+    console.log(array);
+    const response = await AsyncStorage.setItem(
+      'AllWords',
+      JSON.stringify(array),
+    );
+    return response;
+  } catch (error) {
+    console.warn(error);
+  }
+};
 
 const allWordsSlice = createSlice({
   name: 'allWords',
   initialState: {
-    arrayAllWords: [],
-    allWords: {},
+    allWords: [],
   },
   reducers: {
     setAllWords: (state: any, action) => {
-      array.push(action.payload);
-      try {
-        AsyncStorage.setItem('AllWords', JSON.stringify(array));
-      } catch (error) {
-        // Alert.alert(error);
-      }
+      setter(action);
     },
-    getAllWords: (state) => {
-      let result: any = AsyncStorage.getItem('AllWords');
-      console.log(result)
-      try {
-        state.arrayAllWords = JSON.parse(result);
-        console.log('ciao');
-      } catch (error) {
-        // Alert.alert(error);
-      }
+    getAllWords: (state: any) => {
+      aspetta(state);
     },
+
+    
   },
 });
 

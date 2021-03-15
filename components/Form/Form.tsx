@@ -1,23 +1,26 @@
-import React, { useState } from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
+import React, { useEffect, useState } from 'react';
 import { Button, TextInput, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { setAllWords } from '../../Redux/Slices/allWords/allWordsSlice';
+// import { setAllWords } from '../../Redux/Slices/allWords/allWordsSlice';
 import { Style } from './Style';
 
 
-export const Form = () => {
+export const Form = (props: any) => {
 
-  const dispatch = useDispatch();
 
   const [parole, setParole] = useState('');
-  const [counter, setCounter] = useState<number>(0);
 
-  const handleSubmit = () => {
-    setCounter(preCounter => preCounter + 1);
-    dispatch(setAllWords({ id: counter, parola: parole }));
+  useEffect(() => {
+    props.getAllKeys();
+  }, [parole])
+
+
+  const handleSubmit = async () => {
+    let key = Date.now().toString();
+    await props.setItemStorage(key, parole);
     setParole('');
-  };
-
+  }
 
   return (
     <View >
