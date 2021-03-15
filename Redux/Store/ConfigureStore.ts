@@ -1,8 +1,10 @@
 import {configureStore, combineReducers} from '@reduxjs/toolkit';
-import {allWordsReducer} from '../Slices/allWords/allWordsSlice';
+import { arrayListReducer } from '../Slices/arrayList';
+import { keysReducer } from '../Slices/keys';
 
 const reducer = combineReducers({
-  allWords: allWordsReducer,
+  arrayList: arrayListReducer,
+  keys: keysReducer
 });
 
 export type RootState = ReturnType<typeof reducer>;

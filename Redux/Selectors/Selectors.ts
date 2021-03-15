@@ -1,3 +1,4 @@
 import {RootState} from '../Store/ConfigureStore';
 
-export const allWordsSelector = (state: RootState) => state.allWords.allWords;
+export const arrayListSelector = (state: RootState) => state.arrayList.arrayList;
+export const keysSelector = (state: RootState) => state.keys.keys;

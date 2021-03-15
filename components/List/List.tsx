@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-// import { allWordsSelector } from '../../Redux/Selectors/Selectors';
-// import { getAllWords } from '../../Redux/Slices/allWords/allWordsSlice';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { FlatList, View, Text, Button } from 'react-native';
 import { Style } from './Style';
 import AsyncStorage from '@react-native-community/async-storage';
+import { arrayListSelector, keysSelector } from '../../Redux/Selectors/Selectors';
+import { setArrayList } from '../../Redux/Slices/arrayList';
 
-export const List = (props: any) => {
+export const List = () => {
 
+  const dispatch = useDispatch();
 
+  const keys = useSelector(keysSelector);
+  const arrayList = useSelector(arrayListSelector);
 
   useEffect(() => {
-    props.getMultiple();
-  }, [props.keys])
+    dispatch(setArrayList(keys));
+  }, [keys])
 
   const removeItem = async (key: string) => {
     await AsyncStorage.removeItem(key)
@@ -24,14 +27,13 @@ export const List = (props: any) => {
       <Button onPress={() => AsyncStorage.clear()} title='remove' />
       <FlatList
         keyExtractor={(item) => item[0]}
-        data={props.arrayList}
+        data={arrayList}
         renderItem={({ item }) => (
           <View style={Style.ViewText}>
             <Text style={Style.single}> {item[1]}</Text>
             <Text style={Style.button} onPress={() => removeItem(item[0])}>x</Text>
           </View>
         )}
-
       />
     </View>
   );

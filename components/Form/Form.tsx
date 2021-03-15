@@ -1,24 +1,27 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import React, { useEffect, useState } from 'react';
 import { Button, TextInput, View } from 'react-native';
-import { useDispatch } from 'react-redux';
-// import { setAllWords } from '../../Redux/Slices/allWords/allWordsSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { Style } from './Style';
+import { setKeys } from '../../Redux/Slices/keys';
+import { keysSelector } from '../../Redux/Selectors/Selectors';
+import { setItemStorage } from '../../core/AsyncStorage';
 
 
-export const Form = (props: any) => {
+export const Form = () => {
+  const dispatch = useDispatch();
 
+  const keys = useSelector(keysSelector);
 
   const [parole, setParole] = useState('');
 
   useEffect(() => {
-    props.getAllKeys();
+    dispatch(setKeys());
   }, [parole])
 
 
   const handleSubmit = async () => {
     let key = Date.now().toString();
-    await props.setItemStorage(key, parole);
+    await setItemStorage(key, parole);
     setParole('');
   }
 
