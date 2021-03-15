@@ -2,27 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { Button, TextInput, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Style } from './Style';
-import { setKeys } from '../../Redux/Slices/keys';
-import { keysSelector } from '../../Redux/Selectors/Selectors';
+import { setKeys, setStateKeys } from '../../Redux/Slices/keys';
+import { stateKeysSelector } from '../../Redux/Selectors/Selectors';
 import { setItemStorage } from '../../core/AsyncStorage';
 
 
 export const Form = () => {
   const dispatch = useDispatch();
 
-  const keys = useSelector(keysSelector);
-
   const [parole, setParole] = useState('');
+
+  const stateKey = useSelector(stateKeysSelector);
 
   useEffect(() => {
     dispatch(setKeys());
-  }, [parole])
+  }, [stateKey])
 
 
   const handleSubmit = async () => {
     let key = Date.now().toString();
     await setItemStorage(key, parole);
     setParole('');
+    dispatch(setStateKeys('Item aggiunto'));
+    dispatch(setStateKeys(''));
   }
 
   return (

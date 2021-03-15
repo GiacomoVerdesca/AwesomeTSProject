@@ -1,22 +1,21 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import { getAllKeys } from '../../core/AsyncStorage';
 
-export const setKeys: any = createAsyncThunk('keys/setKeys', async () => {
-  let arrayKeys: any = [];
-  try {
-    arrayKeys = await AsyncStorage.getAllKeys();
-    return arrayKeys;
-  } catch (error) {
-    console.log(error);
-  }
+export const setKeys: any = createAsyncThunk('keys/setKeys',()=>{
+  return getAllKeys();
 });
 
 const keysSlice = createSlice({
   name: 'keys',
   initialState: {
+    stateKeys: '',
     keys: [],
   },
-  reducers: {},
+  reducers: {
+    setStateKeys: (state,action)=>{
+   state.stateKeys = action.payload;    
+    }
+  },
   extraReducers: {
     [setKeys.fulfilled]: (state, action) => {
       state.keys = action.payload;
@@ -25,3 +24,4 @@ const keysSlice = createSlice({
 });
 
 export const keysReducer = keysSlice.reducer;
+export const {setStateKeys} = keysSlice.actions;

@@ -5,6 +5,7 @@ import { Style } from './Style';
 import AsyncStorage from '@react-native-community/async-storage';
 import { arrayListSelector, keysSelector } from '../../Redux/Selectors/Selectors';
 import { setArrayList } from '../../Redux/Slices/arrayList';
+import { setStateKeys } from '../../Redux/Slices/keys';
 
 export const List = () => {
 
@@ -18,13 +19,20 @@ export const List = () => {
   }, [keys])
 
   const removeItem = async (key: string) => {
-    await AsyncStorage.removeItem(key)
+    dispatch(setStateKeys('Item eliminato'));
+    await AsyncStorage.removeItem(key);
+    dispatch(setStateKeys(''));
+  }
+  const removeAll = async () => {
+    dispatch(setStateKeys('Items eliminati'));
+    await AsyncStorage.clear();
+    dispatch(setStateKeys(''));
   }
 
 
   return (
     <View style={Style.container}>
-      <Button onPress={() => AsyncStorage.clear()} title='remove' />
+      <Button onPress={() => removeAll()} title='remove' />
       <FlatList
         keyExtractor={(item) => item[0]}
         data={arrayList}
