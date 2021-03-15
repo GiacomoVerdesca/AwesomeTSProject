@@ -1,17 +1,10 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import { getMultiple } from '../../core/AsyncStorage';
 
 export const setArrayList: any = createAsyncThunk(
-  'arrayList/setArrayList',
-  async (keys:string[]) => {
-    let values: any;
-    try {
-      values = await AsyncStorage.multiGet(keys);
-      return values;
-    } catch (error) {
-      console.log(error)
-    }
-}
+  'arrayList/setArrayList', (key: string[])=>{
+ return getMultiple(key)
+  }
 );
 const arrayListSlice = createSlice({
   name: 'arrayList',
