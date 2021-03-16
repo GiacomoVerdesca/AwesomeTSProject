@@ -5,13 +5,10 @@ import { Style } from './Style';
 import AsyncStorage from '@react-native-community/async-storage';
 import { arrayListSelector, keysSelector } from '../../Redux/Selectors/Selectors';
 import { setArrayList } from '../../Redux/Slices/arrayList';
-<<<<<<< HEAD
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
 
-=======
 import { setStateKeys } from '../../Redux/Slices/keys';
->>>>>>> b00f4404cbe5a84a79a77e6aa02417526d713577
 
 export const List = () => {
 
@@ -45,7 +42,7 @@ export const List = () => {
         renderItem={({ item }) => (
           <View style={Style.ViewText}>
             <Text style={Style.single}> <FontAwesomeIcon icon={ faSquare } /> {item[1]}</Text>
-            <Text style={Style.button} onPress={() => removeItem(item[0])}>x</Text>
+            <Text style={Style.button} onPress={() => removeItem(item[0])}> <FontAwesomeIcon icon={ faSquare } />x</Text>
           </View>
         )}
       />
