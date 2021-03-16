@@ -1,15 +1,14 @@
 import {StyleSheet} from 'react-native';
 
 export const Style = StyleSheet.create({
-  container:{
-    flex:1,
-    marginTop:40,
-    marginBottom:30
-
+  container: {
+    flex: 1,
+    marginTop: 40,
+    marginBottom: 30,
   },
   ViewText: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     marginTop: 7,
     marginRight: 10,
     marginLeft: 10,
@@ -29,6 +28,9 @@ export const Style = StyleSheet.create({
     color: 'orange',
     fontSize: 17,
     fontWeight: 'bold',
-    maxWidth:'92%'
+    maxWidth: '92%',
   },
+  icon:{
+    color:'orange',
+  }
 });

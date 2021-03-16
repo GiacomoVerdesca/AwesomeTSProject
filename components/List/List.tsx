@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FlatList, View, Text, Button } from 'react-native';
+import { FlatList, View, Text, TouchableOpacity } from 'react-native';
 import { Style } from './Style';
-import AsyncStorage from '@react-native-community/async-storage';
-import { arrayListSelector, keysSelector } from '../../Redux/Selectors/Selectors';
+import { arrayListSelector, keysSelector, pressedSelector, selectAllSelector } from '../../Redux/Selectors/Selectors';
 import { setArrayList } from '../../Redux/Slices/arrayList';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faSquare } from '@fortawesome/free-regular-svg-icons';
-
-import { setStateKeys } from '../../Redux/Slices/keys';
+import { faCheckSquare, faSquare } from '@fortawesome/free-regular-svg-icons';
+import { setPressed, setSelectAll, setSelectItem } from '../../Redux/Slices/pressed';
+import SelectAndDelete from './components';
 
 export const List = () => {
 
@@ -16,34 +15,41 @@ export const List = () => {
 
   const keys = useSelector(keysSelector);
   const arrayList = useSelector(arrayListSelector);
+  const pressed = useSelector(pressedSelector);
+  const selectAll = useSelector(selectAllSelector);
 
   useEffect(() => {
     dispatch(setArrayList(keys));
+    keys.length === 0 ? dispatch(setPressed(false)) : null;
   }, [keys])
 
-  const removeItem = async (key: string) => {
-    dispatch(setStateKeys('Item eliminato'));
-    await AsyncStorage.removeItem(key);
-    dispatch(setStateKeys(''));
-  }
-  const removeAll = async () => {
-    dispatch(setStateKeys('Items eliminati'));
-    await AsyncStorage.clear();
-    dispatch(setStateKeys(''));
-  }
 
+  const icon = (key: never) => {
+    let sentence: boolean = selectAll.includes(key);
+    if (sentence) {
+      return faCheckSquare
+    } else {
+      return faSquare
+    }
+  }
 
   return (
     <View style={Style.container}>
-      <Button onPress={() => removeAll()} title='remove' />
+      <SelectAndDelete setSelectAll={setSelectAll} selectAll={selectAll} pressed={pressed} keys={keys} />
       <FlatList
         keyExtractor={(item) => item[0]}
         data={arrayList}
         renderItem={({ item }) => (
-          <View style={Style.ViewText}>
-            <Text style={Style.single}> <FontAwesomeIcon icon={ faSquare } /> {item[1]}</Text>
-            <Text style={Style.button} onPress={() => removeItem(item[0])}> <FontAwesomeIcon icon={ faSquare } />x</Text>
-          </View>
+          <TouchableOpacity onLongPress={() => dispatch(setPressed(true))} delayLongPress={300}>
+            <View style={Style.ViewText}>
+              {pressed &&
+                <TouchableOpacity onPress={() => dispatch(setSelectItem(item[0]))}>
+                  <FontAwesomeIcon style={Style.icon} icon={icon(item[0])} />
+                </TouchableOpacity>
+              }
+              <Text style={Style.single}>  {item[1]} </Text>
+            </View>
+          </TouchableOpacity>
         )}
       />
     </View>
